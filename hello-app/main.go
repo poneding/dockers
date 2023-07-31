@@ -45,7 +45,7 @@ func greet(w http.ResponseWriter, r *http.Request) {
 		host = "-"
 	}
 	log.Println("GET [200] /")
-	fmt.Fprintf(w, "Hello World! \nTime now is: %v\nServer: %s\n Version: %s\n", time.Now().Format(time.RFC3339), host, version)
+	fmt.Fprintf(w, "Hello World! \nTime now is: %v\nServer: %s\nVersion: %s\n", time.Now().Format(time.RFC3339), host, version)
 }
 
 // Simulate a long running request
