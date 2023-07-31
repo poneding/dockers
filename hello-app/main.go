@@ -27,7 +27,7 @@ func init() {
 	}
 	version = os.Getenv("HELLO_APP_VERSION")
 	if version == "" {
-		version = "v2"
+		version = "unknown"
 	}
 }
 
@@ -44,7 +44,7 @@ func greet(w http.ResponseWriter, r *http.Request) {
 	if host == "" {
 		host = "-"
 	}
-	log.Println("GET [200] /")
+	log.Println("GET [200] " + pathBase)
 	fmt.Fprintf(w, "Hello World! \nTime now is: %v\nServer: %s\nVersion: %s\n", time.Now().Format(time.RFC3339), host, version)
 }
 
@@ -59,7 +59,7 @@ func elapsed(w http.ResponseWriter, r *http.Request) {
 func readMySettings(w http.ResponseWriter, r *http.Request) {
 	var conf = struct {
 		App      string
-		Version  string
+		Author   string
 		UserName string
 		Password string
 	}{}
@@ -84,7 +84,7 @@ func main() {
 
 	http.HandleFunc(pathBase+"/headers", headers)
 	http.HandleFunc(pathBase+"/elapsed", elapsed)
-	http.HandleFunc(pathBase+"/configuration/mysettings", readMySettings)
+	http.HandleFunc(pathBase+"/settings", readMySettings)
 	http.HandleFunc(rootPath, greet)
 	log.Println("hello-app server started.")
 	log.Fatalln(http.ListenAndServe(":"+port, nil))
