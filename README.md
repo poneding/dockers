@@ -3,6 +3,7 @@
 - counter
 - hello-app
 - sparrow
+- ubuntud
 
 编译 Docker 镜像：
 
