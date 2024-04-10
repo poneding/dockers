@@ -36,6 +36,8 @@ func headers(w http.ResponseWriter, r *http.Request) {
 	for k, v := range r.Header {
 		headers += fmt.Sprintf("%v: %v\n", k, v)
 	}
+	log.Println("GET [200] /headers")
+	log.Println("Headers \n" + headers)
 	fmt.Fprintf(w, "Headers \n"+headers)
 }
 
