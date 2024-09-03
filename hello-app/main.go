@@ -89,5 +89,11 @@ func main() {
 	http.HandleFunc(pathBase+"/settings", readMySettings)
 	http.HandleFunc(rootPath, greet)
 	log.Println("hello-app server started.")
+	go func() {
+		for {
+			log.Println("hello-app server is running.")
+			time.Sleep(1 * time.Second)
+		}
+	}()
 	log.Fatalln(http.ListenAndServe(":"+port, nil))
 }
