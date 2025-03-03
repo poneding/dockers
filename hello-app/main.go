@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -22,9 +23,12 @@ func init() {
 		pathBase = "/" + pathBase
 	}
 	port = os.Getenv("HELLO_APP_PORT")
-	if port == "" {
-		port = "80"
+	if len(port) > 0 {
+		if _, err := strconv.Atoi(port); err != nil {
+			port = "80"
+		}
 	}
+
 	version = os.Getenv("HELLO_APP_VERSION")
 	if version == "" {
 		version = "unknown"
