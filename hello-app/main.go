@@ -13,7 +13,7 @@ import (
 
 var (
 	pathBase string
-	port     string
+	port     int
 	version  string
 )
 
@@ -22,11 +22,8 @@ func init() {
 	if pathBase != "" && !strings.HasPrefix(pathBase, "/") {
 		pathBase = "/" + pathBase
 	}
-	port = os.Getenv("HELLO_APP_PORT")
-	if len(port) > 0 {
-		if _, err := strconv.Atoi(port); err != nil {
-			port = "80"
-		}
+	if port, _ = strconv.Atoi(os.Getenv("HELLO_APP_PORT")); port == 0 {
+		port = 80
 	}
 
 	version = os.Getenv("HELLO_APP_VERSION")
@@ -92,12 +89,14 @@ func main() {
 	http.HandleFunc(pathBase+"/elapsed", elapsed)
 	http.HandleFunc(pathBase+"/settings", readMySettings)
 	http.HandleFunc(rootPath, greet)
-	log.Println("hello-app server started.")
+	log.Printf("hello-app serve at 0.0.0.0:%d", port)
 	go func() {
 		for {
 			log.Println("hello-app server is running.")
 			time.Sleep(1 * time.Second)
 		}
 	}()
-	log.Fatalln(http.ListenAndServe(":"+port, nil))
+
+	log.Println()
+	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%d", port), nil))
 }
